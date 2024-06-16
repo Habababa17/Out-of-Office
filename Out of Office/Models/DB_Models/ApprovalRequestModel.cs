@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Out_of_Office.Models.DB_Models
 {
-    public class ApprovalRequest
+    public class ApprovalRequestModel
     {
         [Key]
         public Guid ID { get; set; }
@@ -28,9 +28,9 @@ namespace Out_of_Office.Models.DB_Models
 
         // Navigation properties
         [ForeignKey("Approver")]
-        public Employee ApproverObject { get; set; }
+        public EmployeeModel ApproverObject { get; set; }
 
         [ForeignKey("LeaveRequest")]
-        public LeaveRequest LeaveRequestObject { get; set; }
+        public LeaveRequestModel LeaveRequestObject { get; set; }
     }
 }

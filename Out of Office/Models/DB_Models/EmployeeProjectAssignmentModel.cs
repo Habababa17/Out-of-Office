@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Out_of_Office.Models.DB_Models
 {
-    public class EmployeeProjectAssignment
+    public class EmployeeProjectAssignmentModel
     {
         [Key]
         public Guid EmployeeID { get; set; }
@@ -19,9 +19,9 @@ namespace Out_of_Office.Models.DB_Models
 
         // Navigation properties
         [ForeignKey("EmployeeID")]
-        public Employee Employee { get; set; }
+        public EmployeeModel Employee { get; set; }
 
         [ForeignKey("ProjectID")]
-        public Project Project { get; set; }
+        public ProjectModel Project { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using Out_of_Office.Models.Enums;
 
 namespace Out_of_Office.DB_Models
 {
-    public class Employee
+    public class EmployeeModel
     {
         [Key]
         public Guid ID { get; set; }
@@ -32,15 +32,12 @@ namespace Out_of_Office.DB_Models
         [RegularExpression("Active|Inactive")]
         public string Status { get; set; }
 
+        [ForeignKey("PeoplePartner")]
         public Guid? PeoplePartner { get; set; }
 
         [Required]
         public int OutOfOfficeBalance { get; set; }
 
         public byte[]? Photo { get; set; }
-
-        // Navigation properties
-        [ForeignKey("PeoplePartner")]
-        public Employee PeoplePartnerObject { get; set; }
     }
 }

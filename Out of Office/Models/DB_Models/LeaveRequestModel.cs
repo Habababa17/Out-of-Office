@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Out_of_Office.Models.Enums;
 namespace Out_of_Office.Models.DB_Models
 {
-    public class LeaveRequest
+    public class LeaveRequestModel
     {
         public Guid ID { get; set; }
         public Guid Employee { get; set; }
@@ -23,6 +23,6 @@ namespace Out_of_Office.Models.DB_Models
         public string Status { get; set; }
 
         // Navigation properties
-        public Employee EmployeeObject { get; set; }
+        public EmployeeModel EmployeeObject { get; set; }
     }
 }

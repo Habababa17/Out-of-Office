@@ -10,7 +10,7 @@ using Out_of_Office.Models.Enums;
 
 namespace Out_of_Office.Models.DB_Models
 {
-    public class Project
+    public class ProjectModel
     {
         [Key]
         public Guid ID { get; set; }
@@ -36,6 +36,6 @@ namespace Out_of_Office.Models.DB_Models
         // Navigation properties
 
         [ForeignKey("ProjectManager")]
-        public Employee ProjectManagerObject { get; set; }
+        public EmployeeModel ProjectManagerObject { get; set; }
     }
 }

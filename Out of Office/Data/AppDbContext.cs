@@ -8,15 +8,16 @@ using System.Configuration;
 using Out_of_Office.DB_Models;
 using Out_of_Office.Models.DB_Models;
 using Microsoft.Identity.Client;
+using Microsoft.Extensions.Configuration;
 
 namespace Out_of_Office.Data
 {
-    internal class AppDbContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public DbSet<Employee> Employee { get; set; }
-        public DbSet<LeaveRequest> LeaveRequest { get; set; }
-        public DbSet<ApprovalRequest> ApprovalRequest { get; set; }
-        public DbSet<Project> Project { get; set; }
+        public DbSet<EmployeeModel> Employee { get; set; }
+        public DbSet<LeaveRequestModel> LeaveRequest { get; set; }
+        public DbSet<ApprovalRequestModel> ApprovalRequest { get; set; }
+        public DbSet<ProjectModel> Project { get; set; }
 
 
         public string ConnectionString { get; set; }
@@ -24,7 +25,13 @@ namespace Out_of_Office.Data
         {
             if (connectionstring == null)
             {
-                ConnectionString = ConfigurationManager.ConnectionStrings["SimpleOfficeDB"].ConnectionString;
+                //ConnectionString = ConfigurationManager.ConnectionStrings["SimpleOfficeDB"].ConnectionString;
+
+                var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+                ConnectionString = config.GetConnectionString("SimpleOfficeDB");
             }
             else
             {
