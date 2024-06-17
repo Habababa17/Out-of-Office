@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Out_of_Office.Data.Repositories
 {
-    internal class EmployeeProjectAssignmentRepository : Repository<EmployeeProjectAssignmentModel>, IEmployeeProjectAssignmentRepository
+    public class EmployeeProjectAssignmentRepository : Repository<EmployeeProjectAssignmentModel>, IEmployeeProjectAssignmentRepository
     {
         public EmployeeProjectAssignmentRepository(AppDbContext dbContext) : base(dbContext)
         {

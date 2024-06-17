@@ -15,13 +15,16 @@ using System.Windows.Forms;
 
 namespace Out_of_Office.Forms
 {
-    public partial class ListForm : Form, IListForm
+    // partial class ListForm
+    public partial class ListForm<T> 
+        : Form, IListForm
     {
-        private IServiceProvider _serviceProvider;
-        private List<EmployeeDto> collection;
+        protected IServiceProvider _serviceProvider;
+        //protected List<EmployeeDto> collection;
+        protected List<T> collection;
         private string currentSortColumn;
         private SortOrder currentSortOrder;
-
+        private Form currentControlForm;
         public ListForm()
         {
             InitializeComponent();
@@ -38,9 +41,10 @@ namespace Out_of_Office.Forms
             await InitializeAsync();
             UpdateUI();
         }
-        private async Task InitializeAsync()
+        public virtual async Task InitializeAsync()
         {
-            collection = (await _serviceProvider.GetRequiredService<IEmployeeService>().GetUsersAsync()).Employees;
+            throw new Exception("List Form class wrong usage");
+            //collection = (await _serviceProvider.GetRequiredService<IEmployeeService>().GetUsersAsync()).Employees;
         }
         private void UpdateUI()
         {
@@ -69,7 +73,9 @@ namespace Out_of_Office.Forms
         public void SortDataGrid(string propertyName, SortOrder sortOrder)
         {
             // Get the property info of the specified property name
-            var prop = typeof(EmployeeDto).GetProperty(propertyName);
+            var prop = typeof(T).GetProperty(propertyName);
+            //var prop = typeof(EmployeeDto).GetProperty(propertyName);
+
 
             // Sort the list based on the selected property and sort order using LINQ
             if (sortOrder == SortOrder.Ascending)
@@ -89,5 +95,25 @@ namespace Out_of_Office.Forms
             dataGrid.DataSource = null;
             dataGrid.DataSource = collection;
         }
+
+        protected void ShowEmbeddedForm(Form embeddedForm)
+        {
+            //remove the previously added list form if it exists
+            if (currentControlForm != null)
+            {
+                tableLayoutPanel1.Controls.Remove(currentControlForm);
+                currentControlForm.Dispose();
+            }
+            currentControlForm = embeddedForm;
+
+            //add new list form
+            embeddedForm.TopLevel = false;
+            embeddedForm.FormBorderStyle = FormBorderStyle.None;
+            embeddedForm.Dock = DockStyle.Fill;
+
+            tableLayoutPanel1.Controls.Add(embeddedForm, 0, 2);
+            embeddedForm.Show();
+        }
+
     }
 }

@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace Out_of_Office.Data.Repositories
 {
-    internal class LeaveRequestRepository : Repository<LeaveRequestModel>, ILeaveRequestRepository
+    public class LeaveRequestRepository : Repository<LeaveRequestModel>, ILeaveRequestRepository
     {
         public LeaveRequestRepository(AppDbContext dbContext) : base(dbContext)
         {
         }
+
     }
 }

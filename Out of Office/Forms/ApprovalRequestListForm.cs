@@ -13,19 +13,19 @@ using System.Windows.Forms;
 
 namespace Out_of_Office.Forms
 {
-    public partial class EmployeeListForm : ListForm<EmployeeDto>
+    public partial class ApprovalRequestListForm : ListForm<ApprovalRequestDto>
     {
+        public ApprovalRequestListForm() : base() { }
 
-        public EmployeeListForm() : base() { }
-
-        public EmployeeListForm(IServiceProvider serviceProvider) : base(serviceProvider)
+        public ApprovalRequestListForm(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            
+
         }
         public override async Task InitializeAsync()
         {
-            this.collection = (await this._serviceProvider.GetRequiredService<IEmployeeService>().GetUsersAsync()).Employees;
+            this.collection = (await this._serviceProvider.GetRequiredService<IApprovalRequestService>().GetApprovalRequestsAsync()).ApprovalRequests;
         }
+
 
     }
 }

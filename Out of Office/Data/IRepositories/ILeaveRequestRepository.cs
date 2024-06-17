@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Out_of_Office.Data.IRepositories
 {
-    internal interface ILeaveRequestRepository : IRepository<LeaveRequestModel>
+    public interface ILeaveRequestRepository : IRepository<LeaveRequestModel>
     {
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Out_of_Office.Models.Dto_Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,9 @@ namespace Out_of_Office.Services.Interfaces
 {
     public interface ILeaveRequestService
     {
+        public Task AddLeaveRequestAsync(LeaveRequestDto leaveRequestDto);
+        public Task UpdateLeaveRequestAsync(LeaveRequestDto leaveRequestDto);
+        public Task<LeaveRequestListDto> GetLeaveRequestsAsync(LeaveRequestFiltersDto? filtersDto = null);
+
     }
 }

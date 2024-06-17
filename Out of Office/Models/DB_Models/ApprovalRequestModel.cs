@@ -26,11 +26,5 @@ namespace Out_of_Office.Models.DB_Models
 
         public string? Comment { get; set; }
 
-        // Navigation properties
-        [ForeignKey("Approver")]
-        public EmployeeModel ApproverObject { get; set; }
-
-        [ForeignKey("LeaveRequest")]
-        public LeaveRequestModel LeaveRequestObject { get; set; }
     }
 }

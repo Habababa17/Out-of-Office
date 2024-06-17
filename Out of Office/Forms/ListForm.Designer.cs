@@ -1,6 +1,6 @@
 ﻿namespace Out_of_Office.Forms
 {
-    partial class ListForm
+    partial class ListForm<T>
     {
         /// <summary>
         /// Required designer variable.

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Out_of_Office.Forms.Interfaces;
 using Out_of_Office.Helpers;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Out_of_Office.Forms
         IServiceProvider _serviceProvider;
         private TableLayoutPanel tableLayoutPanel3;
         private Button[] selectionListButtons;
-
+        private Form currentEmbeddedForm;
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
@@ -125,27 +126,29 @@ namespace Out_of_Office.Forms
             // 
             // approvalRequestsSelectionButton
             // 
-            approvalRequestsSelectionButton.Location = new Point(21, 266);
+            approvalRequestsSelectionButton.Location = new Point(6, 264);
             approvalRequestsSelectionButton.Name = "approvalRequestsSelectionButton";
-            approvalRequestsSelectionButton.Size = new Size(101, 23);
+            approvalRequestsSelectionButton.Size = new Size(118, 23);
             approvalRequestsSelectionButton.TabIndex = 3;
             approvalRequestsSelectionButton.Text = "Approval Requests";
             approvalRequestsSelectionButton.UseVisualStyleBackColor = true;
+            approvalRequestsSelectionButton.Click += approvalRequestsSelectionButton_Click;
             // 
             // leaveRequestsSelectionButton
             // 
-            leaveRequestsSelectionButton.Location = new Point(21, 196);
+            leaveRequestsSelectionButton.Location = new Point(6, 197);
             leaveRequestsSelectionButton.Name = "leaveRequestsSelectionButton";
-            leaveRequestsSelectionButton.Size = new Size(101, 23);
+            leaveRequestsSelectionButton.Size = new Size(118, 23);
             leaveRequestsSelectionButton.TabIndex = 2;
             leaveRequestsSelectionButton.Text = "Leave Requests";
             leaveRequestsSelectionButton.UseVisualStyleBackColor = true;
+            leaveRequestsSelectionButton.Click += leaveRequestsSelectionButton_Click;
             // 
             // projectsSelectionButton
             // 
-            projectsSelectionButton.Location = new Point(21, 130);
+            projectsSelectionButton.Location = new Point(6, 131);
             projectsSelectionButton.Name = "projectsSelectionButton";
-            projectsSelectionButton.Size = new Size(101, 23);
+            projectsSelectionButton.Size = new Size(118, 23);
             projectsSelectionButton.TabIndex = 1;
             projectsSelectionButton.Text = "Projects";
             projectsSelectionButton.UseVisualStyleBackColor = true;
@@ -153,9 +156,9 @@ namespace Out_of_Office.Forms
             // 
             // employeesSelectionButton
             // 
-            employeesSelectionButton.Location = new Point(21, 61);
+            employeesSelectionButton.Location = new Point(6, 61);
             employeesSelectionButton.Name = "employeesSelectionButton";
-            employeesSelectionButton.Size = new Size(101, 23);
+            employeesSelectionButton.Size = new Size(118, 23);
             employeesSelectionButton.TabIndex = 0;
             employeesSelectionButton.Text = "Employees";
             employeesSelectionButton.UseVisualStyleBackColor = true;
@@ -189,7 +192,6 @@ namespace Out_of_Office.Forms
                 selectionListButtons[i].Enabled = avalibilities[i];
             }
         }
-
         private void SetInfo()
         {
 
@@ -239,31 +241,56 @@ namespace Out_of_Office.Forms
         private Button leaveRequestsSelectionButton;
         private Button projectsSelectionButton;
 
-        private void employeesSelectionButton_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void listSelectiongroupBox_Enter(object sender, EventArgs e)
         {
 
         }
 
-        private void projectsSelectionButton_Click(object sender, EventArgs e)
-        {
-            ListForm form = new EmployeeListForm(_serviceProvider); //TODO fix
-            ShowEmbeddedForm(form);
 
-        }
 
-        private void ShowEmbeddedForm(ListForm embeddedForm)
+        private void ShowEmbeddedForm(Form embeddedForm)
         {
+            //remove the previously added list form if it exists
+            if (currentEmbeddedForm != null)
+            {
+                tableLayoutPanel2.Controls.Remove(currentEmbeddedForm);
+                currentEmbeddedForm.Dispose();
+            }
+            currentEmbeddedForm = embeddedForm;
+
+            //add new list form
             embeddedForm.TopLevel = false;
             embeddedForm.FormBorderStyle = FormBorderStyle.None;
             embeddedForm.Dock = DockStyle.Fill;
 
             tableLayoutPanel2.Controls.Add(embeddedForm, 1, 0);
             embeddedForm.Show();
+        }
+
+
+        private void employeesSelectionButton_Click(object sender, EventArgs e)
+        {
+            EmployeeListForm form = new EmployeeListForm(_serviceProvider); 
+            ShowEmbeddedForm(form);
+        }
+
+        private void projectsSelectionButton_Click(object sender, EventArgs e)
+        {
+            ProjectListForm form = new ProjectListForm(_serviceProvider);
+            ShowEmbeddedForm(form);
+        }
+
+        private void leaveRequestsSelectionButton_Click(object sender, EventArgs e)
+        {
+            LeaveRequestListForm form = new LeaveRequestListForm(_serviceProvider);
+            ShowEmbeddedForm(form);
+        }
+
+        private void approvalRequestsSelectionButton_Click(object sender, EventArgs e)
+        {
+            ApprovalRequestListForm form = new ApprovalRequestListForm(_serviceProvider);
+            ShowEmbeddedForm(form);
         }
     }
 }
