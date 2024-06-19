@@ -11,6 +11,7 @@ namespace Out_of_Office.Services.Interfaces
     public interface IProjectService
     {
         public Task<ProjectListDto> GetProjectsAsync(ProjectFiltersDto? filtersDto = null);
-        public Task AddProject(ProjectModel project); //TODO change to dto
+        public Task UpdateProjectAsync(ProjectDto project);
+        public Task AddProjectAsync(ProjectDto project); 
     }
 }

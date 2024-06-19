@@ -14,26 +14,20 @@ using System.Windows.Forms;
 
 namespace Out_of_Office.Forms.ListControl
 {
-    public partial class LeaveRequestControl : Form
+    public partial class LeaveRequestControl : ControlForm
     {
         protected int Creatorstate = 0; //0 indicates adding a new record to db
 
-        protected IServiceProvider _serviceProvider;
-        public LeaveRequestControl(IServiceProvider serviceProvider)
+        public LeaveRequestControl(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             InitializeComponent();
-            _serviceProvider = serviceProvider;
         }
-        private void newLeaveRequestButton_Click(object sender, EventArgs e)
+        protected override void newButton_Click(object sender, EventArgs e)
         {
             LeaveRequestCreatorForm leaveRequestForm = new LeaveRequestCreatorForm(_serviceProvider, Creatorstate);
             leaveRequestForm.ShowDialog();
 
         }
-
-
-
-
 
     }
 }

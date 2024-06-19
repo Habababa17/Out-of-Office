@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Out_of_Office.Helpers;
 using Out_of_Office.Models.Dto_Models;
 using Out_of_Office.Models.Enums;
 using Out_of_Office.Services.Interfaces;
@@ -18,6 +19,11 @@ namespace Out_of_Office.Forms.Creators
     {
         protected IServiceProvider _serviceProvider;
         protected int _state;
+        protected LeaveRequestDto? _leaveRequestDto;
+        public LeaveRequestCreatorForm(IServiceProvider serviceProvider, int state, LeaveRequestDto leaveRequestDto) : this(serviceProvider, state)
+        {
+            _leaveRequestDto = leaveRequestDto;
+        }
         public LeaveRequestCreatorForm(IServiceProvider serviceProvider, int state)
         {
             InitializeComponent();
@@ -28,9 +34,8 @@ namespace Out_of_Office.Forms.Creators
             abscenceReasonComboBox.DataSource = Enum.GetValues(typeof(AbsenceReasonEnum));
             abscenceReasonComboBox.DisplayMember = "DisplayText";
 
-
-
         }
+
         private void AddLeaveRequest(LeaveRequestDto entity)
         {
             this._serviceProvider.GetRequiredService<ILeaveRequestService>().AddLeaveRequestAsync(entity);
@@ -38,20 +43,23 @@ namespace Out_of_Office.Forms.Creators
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            AddorUpdateEntry(SubmitStateEnum.New);
+            ExceptionHelper.HandleException(() => AddorUpdateEntry(SubmitStateEnum.New), "Error with saving");
         }
 
         private void submitButton_Click(object sender, EventArgs e)
         {
-            AddorUpdateEntry(SubmitStateEnum.Submitted);
+            ExceptionHelper.HandleException(() => AddorUpdateEntry(SubmitStateEnum.Submitted), "Error with submiting");
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            AddorUpdateEntry(SubmitStateEnum.Canceled);
+            ExceptionHelper.HandleException(() => AddorUpdateEntry(SubmitStateEnum.Canceled), "Error with canceling");
         }
 
-        private async Task AddorUpdateEntry(SubmitStateEnum submitStateEnum)
+
+
+
+        private async Task AddorUpdateEntry(SubmitStateEnum submitStateEnum) //this should be done by strategy d.p. and generic types
         {
             Enum.TryParse(abscenceReasonComboBox.SelectedItem.ToString(), out AbsenceReasonEnum selectedValue);
 
@@ -65,35 +73,31 @@ namespace Out_of_Office.Forms.Creators
                 EndDate = endDateTime.Value,
                 Comment = commentTextBox.Text,
                 Status = submitStateEnum
-            };
+            }; 
             switch (_state)
             {
+
                 case 0: //add new Leave Request
-                    if(submitStateEnum == SubmitStateEnum.Canceled)
+                    if (submitStateEnum == SubmitStateEnum.Canceled)
                     {
                         return;
                     }
+
                     await _serviceProvider.GetRequiredService<ILeaveRequestService>().AddLeaveRequestAsync(entity);
                     break;
                 case 1: //Update Leave Request
-                    await _serviceProvider.GetRequiredService<ILeaveRequestService>().UpdateLeaveRequestAsync(entity);
+                    if (this._leaveRequestDto != null)
+                    {
+                        await _serviceProvider.GetRequiredService<ILeaveRequestService>().UpdateLeaveRequestAsync(_leaveRequestDto.ID,  entity);
+                        _leaveRequestDto = null;
+                    }
+                    
                     break;
                 default:
                     throw new Exception("incorect state of LeaveRequestCreatorForm");
             }
+            Close();
         }
-
-        //public class LeaveRequestDto
-        //{
-        //    public Guid ID { get; set; }
-        //    public Guid Employee { get; set; }
-        //   public AbsenceReasonEnum AbsenceReason { get; set; }
-        //    public DateTime StartDate { get; set; }
-        //    public DateTime EndDate { get; set; }
-        //    public string? Comment { get; set; }
-        //    public SubmitStateEnum Status { get; set; }
-        //}
-
 
     }
 }

@@ -16,6 +16,8 @@ namespace Out_of_Office.Models.DB_Models
         [Key]
         public Guid ID { get; set; }
 
+        public string?   ProjectName { get; set; }
+
         [Required]
         [ForeignKey("ProjectType")]
         public int ProjectType { get; set; }

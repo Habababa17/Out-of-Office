@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Out_of_Office.Models.Dto_Models
 {
-    public class LeaveRequestFiltersDto
+    public class LeaveRequestFiltersDto : Filter<LeaveRequestDto>
     {
+        public LeaveRequestFiltersDto()
+        {
+        }
+        public override List<LeaveRequestDto> Filtrate(List<LeaveRequestDto> dtos)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

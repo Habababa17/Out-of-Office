@@ -17,11 +17,8 @@ namespace Out_of_Office.Models.DB_Models
         [Key]
         public Guid ProjectID { get; set; }
 
-        // Navigation properties
-        [ForeignKey("EmployeeID")]
-        public EmployeeModel Employee { get; set; }
+        public virtual EmployeeModel Employee { get; set; }
+        public virtual ProjectModel Project { get; set; }
 
-        [ForeignKey("ProjectID")]
-        public ProjectModel Project { get; set; }
     }
 }

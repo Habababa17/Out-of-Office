@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Out_of_Office.Data.IRepositories
 {
-    internal interface IEmployeeProjectAssignmentRepository : IRepository<EmployeeProjectAssignmentModel>
+    public interface IEmployeeProjectAssignmentRepository : IRepository<EmployeeProjectAssignmentModel>
     {
+        //public Task<EmployeeProjectAssignmentListDto> GetProjectAssignmentsAsync(Guid projectID);
+        public Task<EmployeeProjectAssignmentModel> GetByIdAsync(Guid projectId, Guid employeeId);
     }
 }

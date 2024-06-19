@@ -16,8 +16,8 @@ using System.Windows.Forms;
 namespace Out_of_Office.Forms
 {
     // partial class ListForm
-    public partial class ListForm<T> 
-        : Form, IListForm
+    public abstract partial class ListForm<T, F> 
+        : Form, IListForm where F : Filter<T>
     {
         protected IServiceProvider _serviceProvider;
         //protected List<EmployeeDto> collection;
@@ -25,9 +25,14 @@ namespace Out_of_Office.Forms
         private string currentSortColumn;
         private SortOrder currentSortOrder;
         private Form currentControlForm;
+        private FilterForm<T, F> filterForm;
         public ListForm()
         {
             InitializeComponent();
+        }
+        public ListForm(List<T> collection)
+        {
+            this.collection = collection;
         }
         public ListForm(IServiceProvider serviceProvider)
         {
@@ -46,8 +51,14 @@ namespace Out_of_Office.Forms
             throw new Exception("List Form class wrong usage");
             //collection = (await _serviceProvider.GetRequiredService<IEmployeeService>().GetUsersAsync()).Employees;
         }
-        private void UpdateUI()
+        protected void UpdateUI(List<T> newCollection = null)
         {
+            
+            if (newCollection != null)
+            {
+                collection = newCollection;
+            }
+            dataGrid.DataSource = null;
             dataGrid.DataSource = collection;
         }
 
@@ -85,6 +96,7 @@ namespace Out_of_Office.Forms
             else
             {
                 collection = collection.OrderByDescending(e => prop.GetValue(e, null)).ToList();
+
             }
 
             // Update current sort column and order
@@ -96,11 +108,29 @@ namespace Out_of_Office.Forms
             dataGrid.DataSource = collection;
         }
 
+        protected void ShowFilterForm(FilterForm<T, F> form)
+        {
+            if (filterForm != null)
+            {
+                groupBox1.Controls.Remove(filterForm);
+                filterForm.Dispose();
+            }
+            filterForm = form;
+
+
+            filterForm.TopLevel = false;
+            filterForm.FormBorderStyle = FormBorderStyle.None;
+            filterForm.Dock = DockStyle.Fill;
+
+            groupBox1.Controls.Add(filterForm);
+            filterForm.Show();
+        }
         protected void ShowEmbeddedForm(Form embeddedForm)
         {
             //remove the previously added list form if it exists
             if (currentControlForm != null)
             {
+                
                 tableLayoutPanel1.Controls.Remove(currentControlForm);
                 currentControlForm.Dispose();
             }
@@ -114,6 +144,6 @@ namespace Out_of_Office.Forms
             tableLayoutPanel1.Controls.Add(embeddedForm, 0, 2);
             embeddedForm.Show();
         }
-
+        public abstract void DataGrid_RowHeaderMouseClick(object? sender, DataGridViewCellMouseEventArgs e);
     }
 }

@@ -16,12 +16,13 @@ namespace Out_of_Office.Helpers.Converters
             return new ProjectDto
             {
                 ID = model.ID,
+                ProjectName = model.ProjectName,
                 ProjectType = (ProjectTypeEnum)model.ProjectType,
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
                 ProjectManager = model.ProjectManager,
                 Comment = model.Comment,
-                Status = (ProjectStatusEnum)model.Status,
+                Status = (StatusEnum)model.Status,
             };
         }
 
@@ -30,6 +31,7 @@ namespace Out_of_Office.Helpers.Converters
             return new ProjectModel
             {
                 ID = dto.ID,
+                ProjectName = dto.ProjectName,
                 ProjectType = (int)dto.ProjectType,
                 StartDate = dto.StartDate,
                 EndDate = dto.EndDate,

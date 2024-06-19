@@ -1,6 +1,8 @@
-﻿namespace Out_of_Office.Forms
+﻿using Out_of_Office.Models.Dto_Models;
+
+namespace Out_of_Office.Forms
 {
-    partial class ListForm<T>
+    partial class ListForm<T, F> where F : Filter<T>
     {
         /// <summary>
         /// Required designer variable.
@@ -93,6 +95,6 @@
 
         private TableLayoutPanel tableLayoutPanel1;
         private GroupBox groupBox1;
-        private DataGridView dataGrid;
+        protected DataGridView dataGrid;
     }
 }

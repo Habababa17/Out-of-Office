@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Out_of_Office.Models.Dto_Models
 {
-    public class ApprovalRequestFiltersDto
+    public class ApprovalRequestFiltersDto : Filter<ApprovalRequestDto>
     {
     }
 }

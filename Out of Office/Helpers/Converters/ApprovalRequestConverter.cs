@@ -1,5 +1,6 @@
 ﻿using Out_of_Office.Models.DB_Models;
 using Out_of_Office.Models.Dto_Models;
+using Out_of_Office.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Out_of_Office.Helpers.Converters
                 ID = model.ID,
                 Approver = model.Approver,
                 LeaveRequest = model.LeaveRequest,
-                Status = model.Status,
+                Status = (SubmitStateEnum)model.Status,
                 Comment = model.Comment
             };
         }
@@ -26,10 +27,10 @@ namespace Out_of_Office.Helpers.Converters
         {
             return new ApprovalRequestModel
             {
-                ID = dto.ID,
-                Approver = dto.Approver,
+                ID = dto.ID ?? new Guid(),
+                Approver = dto.Approver ?? throw new ArgumentNullException(nameof(dto.Approver)),
                 LeaveRequest = dto.LeaveRequest,
-                Status = dto.Status,
+                Status = (int)dto.Status,
                 Comment = dto.Comment
             };
         }

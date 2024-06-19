@@ -11,5 +11,6 @@ namespace Out_of_Office.Services.Interfaces
     public interface IApprovalRequestService
     {
         public Task<ApprovalRequestListDto> GetApprovalRequestsAsync(ApprovalRequestFiltersDto? filtersDto = null);
+        public Task AddApprovalRequestAsync(ApprovalRequestDto approvalRequest);
     }
 }

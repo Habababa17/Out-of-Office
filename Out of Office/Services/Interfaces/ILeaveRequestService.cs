@@ -10,8 +10,8 @@ namespace Out_of_Office.Services.Interfaces
     public interface ILeaveRequestService
     {
         public Task AddLeaveRequestAsync(LeaveRequestDto leaveRequestDto);
-        public Task UpdateLeaveRequestAsync(LeaveRequestDto leaveRequestDto);
+        public Task UpdateLeaveRequestAsync(Guid leaveRequestID, LeaveRequestDto leaveRequestDto);
         public Task<LeaveRequestListDto> GetLeaveRequestsAsync(LeaveRequestFiltersDto? filtersDto = null);
-
+        public Task<LeaveRequestDto> GetLeaveRequestAsync(Guid leaveRequestId);
     }
 }

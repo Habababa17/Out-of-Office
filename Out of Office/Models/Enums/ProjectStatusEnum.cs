@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Out_of_Office.Models.Enums
 {
-    public enum ProjectStatusEnum
+    public enum ProjectStatusEnum 
     {
         [EnumMember(Value = "Active")]
         Active = 1,

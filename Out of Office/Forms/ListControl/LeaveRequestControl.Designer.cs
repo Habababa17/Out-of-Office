@@ -28,32 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            newLeaveRequestButton = new Button();
             SuspendLayout();
-            // 
-            // newLeaveRequestButton
-            // 
-            newLeaveRequestButton.Location = new Point(21, 12);
-            newLeaveRequestButton.Name = "newLeaveRequestButton";
-            newLeaveRequestButton.Size = new Size(81, 23);
-            newLeaveRequestButton.TabIndex = 0;
-            newLeaveRequestButton.Text = "New";
-            newLeaveRequestButton.UseVisualStyleBackColor = true;
-            newLeaveRequestButton.Click += newLeaveRequestButton_Click;
             // 
             // LeaveRequestControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(554, 186);
-            Controls.Add(newLeaveRequestButton);
             Name = "LeaveRequestControl";
             Text = "LeaveRequestControl";
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Button newLeaveRequestButton;
     }
 }
