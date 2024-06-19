@@ -150,7 +150,7 @@ namespace Out_of_Office.Forms.Creators
 
         }
         private void CreateFilters()
-        {
+        { 
             _filters.FullName = string.IsNullOrEmpty(nameTextBox.Text) ? null : nameTextBox.Text;
             _filters.SubdivisionEnum = (SubdivisionEnum?)subdivisionComboBox.SelectedItem;
             _filters.PositionEnum = (PositionEnum?)positionComboBox.SelectedItem;

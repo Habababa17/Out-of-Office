@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
+            textBox1 = new NumericUpDown();
             setButton = new Button();
-            searchButton = new Button();
             resetButton = new Button();
             SuspendLayout();
             // 
@@ -40,6 +39,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(277, 23);
             textBox1.TabIndex = 0;
+            textBox1.Value = 10;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
             // setButton
@@ -51,16 +51,6 @@
             setButton.Text = "Set Filters";
             setButton.UseVisualStyleBackColor = true;
             setButton.Click += setButton_Click;
-            // 
-            // searchButton
-            // 
-            searchButton.Location = new Point(515, 11);
-            searchButton.Name = "searchButton";
-            searchButton.Size = new Size(75, 24);
-            searchButton.TabIndex = 2;
-            searchButton.Text = "Search";
-            searchButton.UseVisualStyleBackColor = true;
-            searchButton.Click += searchButton_Click;
             // 
             // resetButton
             // 
@@ -78,7 +68,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(602, 40);
             Controls.Add(resetButton);
-            Controls.Add(searchButton);
             Controls.Add(setButton);
             Controls.Add(textBox1);
             Name = "FilterForm";
@@ -89,9 +78,8 @@
 
         #endregion
 
-        private TextBox textBox1;
-        private Button setButton;
-        private Button searchButton;
-        private Button resetButton;
+        protected NumericUpDown textBox1;
+        protected Button setButton;
+        protected Button resetButton;
     }
 }

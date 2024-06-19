@@ -16,14 +16,18 @@ namespace Out_of_Office.Forms
         protected List<T> _collection;
         protected List<T> _filteredCollection;
         protected F _filters;
-        public FilterForm(List<T> collection, F filters)
+        protected Action<List<T>> update;
+        public FilterForm(ref List<T> collection, F filters, Action<List<T>> update)
         {
-            _collection = collection;
+            _filteredCollection = collection;
+            _collection = new List<T>(_filteredCollection);
             _filters = filters;
             InitializeComponent();
+            this.update = update;
+            resetButton.Click += resetButton_Click;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        protected virtual void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -36,11 +40,9 @@ namespace Out_of_Office.Forms
         private void resetButton_Click(object sender, EventArgs e)
         {
             _filters.ClearFilters();
+            _filteredCollection = _filters.Filtrate(_collection);
+            update(_filteredCollection);
         }
 
-        private void searchButton_Click(object sender, EventArgs e)
-        {
-            //TODO
-        }
     }
 }

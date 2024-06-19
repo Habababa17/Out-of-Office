@@ -10,13 +10,14 @@ namespace Out_of_Office.Models.Dto_Models
 {
     public class EmployeeFiltersDto : Filter<EmployeeDto>
     {
-        public SubdivisionEnum? SubdivisionEnum  { get; set; }
+        public SubdivisionEnum? SubdivisionEnum { get; set; }
         public StatusEnum? StatusEnum { get; set; }
         public PositionEnum? PositionEnum { get; set; }
         public string? FullName { get; set; }
+        public int amountOfRows { get; set; } = 10;
 
 
-        public EmployeeFiltersDto()
+    public EmployeeFiltersDto()
         {
             SubdivisionEnum = null;
             StatusEnum = null;
@@ -51,7 +52,8 @@ namespace Out_of_Office.Models.Dto_Models
             {
                 filteredList = filteredList.Where(e => e.FullName.Contains(FullName, StringComparison.OrdinalIgnoreCase));
             }
-            
+
+            filteredList = filteredList.Take(amountOfRows);
 
             return filteredList.ToList();
         }

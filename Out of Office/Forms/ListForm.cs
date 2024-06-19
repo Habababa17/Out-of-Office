@@ -39,6 +39,7 @@ namespace Out_of_Office.Forms
             _serviceProvider = serviceProvider;
 
             InitializeComponent();
+            //InitializeAsync();
         }
 
         protected override async void OnLoad(EventArgs e)

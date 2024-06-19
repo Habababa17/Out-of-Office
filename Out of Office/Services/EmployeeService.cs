@@ -18,10 +18,12 @@ namespace Out_of_Office.Services
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IEmployeeProjectAssignmentRepository _employeeProjectAssignmentRepository;
-        public EmployeeService(IEmployeeRepository employeeRepository, IEmployeeProjectAssignmentRepository employeeProjectAssignmentRepository)
+        private readonly IProjectRepository _projectRepository;
+        public EmployeeService(IEmployeeRepository employeeRepository, IEmployeeProjectAssignmentRepository employeeProjectAssignmentRepository, IProjectRepository projectRepository)
         {
             _employeeRepository = employeeRepository;
             _employeeProjectAssignmentRepository = employeeProjectAssignmentRepository;
+            _projectRepository = projectRepository;
         }
         public async Task AddEmployeeAsync(EmployeeDto employeeDto)
         {
@@ -86,7 +88,31 @@ namespace Out_of_Office.Services
                 employeeListDto.Employees.Add(EmployeeConverter.ToDto(emp));
             return employeeListDto;
         }
-        
+
+        public async Task<EmployeeListDto> GetUsersFromProjectsAsync(Guid managerId)
+        {
+            var emps = new EmployeeListDto();
+
+            //filter projects
+
+            var projects = (await _projectRepository.GetAllAsync()).ToList();
+            projects = projects.Where(p => p.ProjectManager == managerId).ToList();
+
+            var projectsAssignments = (await _employeeProjectAssignmentRepository.GetAllAsync()).ToList();
+            projectsAssignments = projectsAssignments.Where(e => projects.Any(p => p.ID == e.ProjectID)).ToList();
+
+            //filter employees
+            var employees = (await _employeeRepository.GetAllAsync()).ToList();
+            employees = employees.Where(e => projectsAssignments.Any(p => p.EmployeeID == e.ID)).ToList();
+
+            foreach(var employee in employees)
+            {
+                emps.Employees.Add(EmployeeConverter.ToDto(employee));
+            }
+
+            return emps;
+        }
+
         public IQueryable<EmployeeListDto> Search(IQueryable<EmployeeListDto> collection, EmployeeFiltersDto filter, string searchString)
         {
             throw new NotImplementedException();

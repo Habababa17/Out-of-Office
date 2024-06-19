@@ -40,6 +40,7 @@ namespace Out_of_Office.Forms
 
         public override async Task InitializeAsync()
         {
+
             this.collection = (await this._serviceProvider.GetRequiredService<ILeaveRequestService>().GetLeaveRequestsAsync()).LeaveRequests;
         }
 

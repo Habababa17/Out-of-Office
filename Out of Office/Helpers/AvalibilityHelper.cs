@@ -24,7 +24,7 @@ namespace Out_of_Office.Helpers
                 case PositionEnum.ProjectManager:
                     return new bool[] { true, true, true, true };
                 case PositionEnum.Employee:
-                    return new bool[] { false, true, true, false };
+                    return new bool[] { true, true, true, true };
                 default:
                     throw new ArgumentException("Invalid position enum value.");
             }
