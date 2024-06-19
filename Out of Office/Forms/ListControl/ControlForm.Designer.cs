@@ -45,7 +45,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(554, 186);
+            ClientSize = new Size(554, 66);
             Controls.Add(newButton);
             Name = "ControlForm";
             Text = "LeaveRequestControl";
@@ -54,6 +54,6 @@
 
         #endregion
 
-        private Button newButton;
+        protected Button newButton;
     }
 }

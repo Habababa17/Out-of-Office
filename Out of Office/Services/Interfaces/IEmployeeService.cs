@@ -15,7 +15,7 @@ namespace Out_of_Office.Services.Interfaces
         public Task<EmployeeListDto> GetEmployeesAsync(EmployeeFiltersDto? filtersDto = null);
         public Task<EmployeeListDto> GetEmployeesOnProjectAsync(Guid projectID, EmployeeFiltersDto? filtersDto = null);
         public Task AddEmployeeAsync(EmployeeDto employeeDto);
-        //public Task DeleteEmployee(Guid employeeID); //no deletion
+        public Task<EmployeeListDto> GetUsersFromProjectsAsync(Guid managerId);
         public Task UpdateEmployeeAsync(EmployeeDto employeeDto);
         public Task ChangeEmployeeStatusAsync(Guid id, StatusEnum status);
         public Task AssignEmployeeAsync(Guid EmployeeID, Guid ProjectID);

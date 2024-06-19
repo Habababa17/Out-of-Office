@@ -12,5 +12,7 @@ namespace Out_of_Office.Services.Interfaces
     {
         public Task<ApprovalRequestListDto> GetApprovalRequestsAsync(ApprovalRequestFiltersDto? filtersDto = null);
         public Task AddApprovalRequestAsync(ApprovalRequestDto approvalRequest);
+        public Task<ApprovalRequestListDto> GetUsersApprovalRequestsAsync(Guid userId);
+        public Task<ApprovalRequestListDto> GetManagersApprovalRequestsAsync(Guid userId);
     }
 }

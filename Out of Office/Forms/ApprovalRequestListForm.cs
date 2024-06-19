@@ -2,6 +2,7 @@
 using Out_of_Office.Forms.Creators;
 using Out_of_Office.Forms.InfoForms;
 using Out_of_Office.Forms.ListControl;
+using Out_of_Office.Helpers;
 using Out_of_Office.Models.Dto_Models;
 using Out_of_Office.Services.Interfaces;
 using System;
@@ -26,7 +27,21 @@ namespace Out_of_Office.Forms
         }
         public override async Task InitializeAsync()
         {
-            this.collection = (await this._serviceProvider.GetRequiredService<IApprovalRequestService>().GetApprovalRequestsAsync()).ApprovalRequests;
+            switch (AuthorizationHelper.position)
+            {
+                case Models.Enums.PositionEnum.HRManager:
+                    this.collection = (await this._serviceProvider.GetRequiredService<IApprovalRequestService>().GetApprovalRequestsAsync()).ApprovalRequests;
+                    break;
+                case Models.Enums.PositionEnum.ProjectManager:
+                    this.collection = (await this._serviceProvider.GetRequiredService<IApprovalRequestService>().GetApprovalRequestsAsync()).ApprovalRequests;
+                    break;
+                case Models.Enums.PositionEnum.Employee:
+                    this.collection = (await this._serviceProvider.GetRequiredService<IApprovalRequestService>().GetUsersApprovalRequestsAsync(AuthorizationHelper.loggedInUser.ID)).ApprovalRequests;
+                    break;
+                default:
+                    break;
+            }
+            UpdateUI();
         }
 
         public override void DataGrid_RowHeaderMouseClick(object? sender, DataGridViewCellMouseEventArgs e)

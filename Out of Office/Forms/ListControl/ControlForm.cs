@@ -19,6 +19,7 @@ namespace Out_of_Office.Forms.ListControl
         {
             _serviceProvider = serviceProvider;
             InitializeComponent();
+            
         }
         protected abstract void newButton_Click(object sender, EventArgs e);
     }
