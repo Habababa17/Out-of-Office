@@ -18,6 +18,7 @@ namespace Out_of_Office.Data
         public DbSet<LeaveRequestModel> LeaveRequest { get; set; }
         public DbSet<ApprovalRequestModel> ApprovalRequest { get; set; }
         public DbSet<ProjectModel> Project { get; set; }
+        public DbSet<EmployeeProjectAssignmentModel> EmployeeProjectAssignment { get; set; }
 
 
         public string ConnectionString { get; set; }
@@ -43,6 +44,24 @@ namespace Out_of_Office.Data
             optionsBuilder.UseSqlServer(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }
-        
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<EmployeeProjectAssignmentModel>()
+                .HasKey(e => new { e.EmployeeID, e.ProjectID });
+
+            modelBuilder.Entity<EmployeeProjectAssignmentModel>()
+                .HasOne(e => e.Project)
+                .WithMany()
+                .HasForeignKey(e => e.EmployeeID);
+
+            modelBuilder.Entity<EmployeeProjectAssignmentModel>()
+                .HasOne(e => e.Employee)
+                .WithMany()
+                .HasForeignKey(e => e.ProjectID);
+
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

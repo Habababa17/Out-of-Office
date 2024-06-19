@@ -16,6 +16,12 @@ namespace Out_of_Office.Models.Enums
         Submitted = 2,
 
         [EnumMember(Value = "Canceled")]
-        Canceled = 3
+        Canceled = 3,
+
+        [EnumMember(Value = "Accepted")]
+        Accepted = 4,
+
+        [EnumMember(Value = "Denied")]
+        Denied = 5,
     }
 }

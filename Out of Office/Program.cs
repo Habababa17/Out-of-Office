@@ -25,18 +25,18 @@ namespace Out_of_Office
             //Application.Run(new MainForm(serviceProvider));
 
 
-            ProjectModel newProject = new ProjectModel
-            {
-                ID = Guid.NewGuid(), // Assign a new GUID for the ID
-                ProjectType = ProjectTypeEnum.Internal, // Assign ProjectTypeEnum value
-                StartDate = DateTime.Parse("2024-07-01"),
-                EndDate = DateTime.Parse("2025-12-31"),
-                ProjectManager = new Guid("C46169DC-1D0F-4929-B40C-2D82AE7F4173"), // Assign the GUID of the project manager
-                Comment = "HA hhuuhuu HI HI",
-                Status = "Active" // Optionally set, though it defaults to "Active" in the model
-            };
+            //ProjectModel newProject = new ProjectModel
+            //{
+            //    ID = Guid.NewGuid(), // Assign a new GUID for the ID
+            //    ProjectType = (int)ProjectTypeEnum.Internal, // Assign ProjectTypeEnum value
+            //    StartDate = DateTime.Parse("2024-07-01"),
+            //    EndDate = DateTime.Parse("2025-12-31"),
+            //    ProjectManager = new Guid("C46169DC-1D0F-4929-B40C-2D82AE7F4173"), // Assign the GUID of the project manager
+            //    Comment = "HA hhuuhuu HI HI",
+            //    Status = (int)ProjectStatusEnum.Active // Optionally set, though it defaults to "Active" in the model
+            //};
 
-            pservice.AddProject(newProject);
+            //pservice.AddProject(newProject);
 
 
 

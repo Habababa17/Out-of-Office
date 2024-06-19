@@ -15,16 +15,24 @@ using System.Windows.Forms;
 
 namespace Out_of_Office.Forms
 {
-    public partial class ListForm : Form, IListForm
+    // partial class ListForm
+    public abstract partial class ListForm<T, F> 
+        : Form, IListForm where F : Filter<T>
     {
-        private IServiceProvider _serviceProvider;
-        private List<EmployeeDto> collection;
+        protected IServiceProvider _serviceProvider;
+        //protected List<EmployeeDto> collection;
+        protected List<T> collection;
         private string currentSortColumn;
         private SortOrder currentSortOrder;
-
+        private Form currentControlForm;
+        private FilterForm<T, F> filterForm;
         public ListForm()
         {
             InitializeComponent();
+        }
+        public ListForm(List<T> collection)
+        {
+            this.collection = collection;
         }
         public ListForm(IServiceProvider serviceProvider)
         {
@@ -38,12 +46,19 @@ namespace Out_of_Office.Forms
             await InitializeAsync();
             UpdateUI();
         }
-        private async Task InitializeAsync()
+        public virtual async Task InitializeAsync()
         {
-            collection = (await _serviceProvider.GetRequiredService<IEmployeeService>().GetUsersAsync()).Employees;
+            throw new Exception("List Form class wrong usage");
+            //collection = (await _serviceProvider.GetRequiredService<IEmployeeService>().GetUsersAsync()).Employees;
         }
-        private void UpdateUI()
+        protected void UpdateUI(List<T> newCollection = null)
         {
+            
+            if (newCollection != null)
+            {
+                collection = newCollection;
+            }
+            dataGrid.DataSource = null;
             dataGrid.DataSource = collection;
         }
 
@@ -69,7 +84,9 @@ namespace Out_of_Office.Forms
         public void SortDataGrid(string propertyName, SortOrder sortOrder)
         {
             // Get the property info of the specified property name
-            var prop = typeof(EmployeeDto).GetProperty(propertyName);
+            var prop = typeof(T).GetProperty(propertyName);
+            //var prop = typeof(EmployeeDto).GetProperty(propertyName);
+
 
             // Sort the list based on the selected property and sort order using LINQ
             if (sortOrder == SortOrder.Ascending)
@@ -79,6 +96,7 @@ namespace Out_of_Office.Forms
             else
             {
                 collection = collection.OrderByDescending(e => prop.GetValue(e, null)).ToList();
+
             }
 
             // Update current sort column and order
@@ -89,5 +107,43 @@ namespace Out_of_Office.Forms
             dataGrid.DataSource = null;
             dataGrid.DataSource = collection;
         }
+
+        protected void ShowFilterForm(FilterForm<T, F> form)
+        {
+            if (filterForm != null)
+            {
+                groupBox1.Controls.Remove(filterForm);
+                filterForm.Dispose();
+            }
+            filterForm = form;
+
+
+            filterForm.TopLevel = false;
+            filterForm.FormBorderStyle = FormBorderStyle.None;
+            filterForm.Dock = DockStyle.Fill;
+
+            groupBox1.Controls.Add(filterForm);
+            filterForm.Show();
+        }
+        protected void ShowEmbeddedForm(Form embeddedForm)
+        {
+            //remove the previously added list form if it exists
+            if (currentControlForm != null)
+            {
+                
+                tableLayoutPanel1.Controls.Remove(currentControlForm);
+                currentControlForm.Dispose();
+            }
+            currentControlForm = embeddedForm;
+
+            //add new list form
+            embeddedForm.TopLevel = false;
+            embeddedForm.FormBorderStyle = FormBorderStyle.None;
+            embeddedForm.Dock = DockStyle.Fill;
+
+            tableLayoutPanel1.Controls.Add(embeddedForm, 0, 2);
+            embeddedForm.Show();
+        }
+        public abstract void DataGrid_RowHeaderMouseClick(object? sender, DataGridViewCellMouseEventArgs e);
     }
 }

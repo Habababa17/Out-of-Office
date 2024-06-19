@@ -1,4 +1,7 @@
-﻿namespace Out_of_Office.Data.IRepositories
+﻿using Microsoft.EntityFrameworkCore;
+using Out_of_Office.Models.DB_Models;
+
+namespace Out_of_Office.Data.IRepositories
 {
     public interface IRepository<T> where T : class
     {

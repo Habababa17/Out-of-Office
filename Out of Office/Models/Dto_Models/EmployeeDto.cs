@@ -17,7 +17,7 @@ namespace Out_of_Office.Models.Dto_Models
 
         public PositionEnum Position { get; set; }
 
-        public string Status { get; set; }
+        public StatusEnum Status { get; set; }
 
         public Guid? PeoplePartner { get; set; }
 

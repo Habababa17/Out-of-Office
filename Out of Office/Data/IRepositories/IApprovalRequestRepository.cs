@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Out_of_Office.Data.IRepositories
 {
-    internal interface IApprovalRequestRepository : IRepository<ApprovalRequestModel>
+    public interface IApprovalRequestRepository : IRepository<ApprovalRequestModel>
     {
     }
 }

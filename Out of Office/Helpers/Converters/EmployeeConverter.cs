@@ -1,5 +1,6 @@
 ﻿using Out_of_Office.DB_Models;
 using Out_of_Office.Models.Dto_Models;
+using Out_of_Office.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,9 @@ namespace Out_of_Office.Helpers.Converters
             {
                 ID = model.ID,
                 FullName = model.FullName,
-                Subdivision = model.Subdivision,
-                Position = model.Position,
-                Status = model.Status,
+                Subdivision = (SubdivisionEnum)model.Subdivision,
+                Position = (PositionEnum)model.Position,
+                Status = (StatusEnum)model.Status,
                 PeoplePartner = model.PeoplePartner,
                 OutOfOfficeBalance = model.OutOfOfficeBalance,
                 Photo = model.Photo
@@ -31,9 +32,9 @@ namespace Out_of_Office.Helpers.Converters
             {
                 ID = dto.ID,
                 FullName = dto.FullName,
-                Subdivision = dto.Subdivision,
-                Position = dto.Position,
-                Status = dto.Status,
+                Subdivision = (int)dto.Subdivision,
+                Position = (int)dto.Position,
+                Status = (int)dto.Status,
                 PeoplePartner = dto.PeoplePartner,
                 OutOfOfficeBalance = dto.OutOfOfficeBalance,
                 Photo = dto.Photo

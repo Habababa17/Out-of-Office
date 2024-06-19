@@ -21,16 +21,15 @@ namespace Out_of_Office.DB_Models
 
         [Required]
         [ForeignKey("Subdivision")]
-        public SubdivisionEnum Subdivision { get; set; }
+        public int Subdivision { get; set; }
 
         [Required]
         [ForeignKey("Position")]
-        public PositionEnum Position { get; set; }
+        public int Position { get; set; }
 
         [Required]
-        [MaxLength(10)]
-        [RegularExpression("Active|Inactive")]
-        public string Status { get; set; }
+        [ForeignKey("Status")]
+        public int Status { get; set; }
 
         [ForeignKey("PeoplePartner")]
         public Guid? PeoplePartner { get; set; }

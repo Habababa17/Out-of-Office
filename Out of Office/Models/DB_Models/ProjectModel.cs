@@ -12,17 +12,21 @@ namespace Out_of_Office.Models.DB_Models
 {
     public class ProjectModel
     {
+        [Required]
         [Key]
         public Guid ID { get; set; }
 
+        public string?   ProjectName { get; set; }
+
         [Required]
         [ForeignKey("ProjectType")]
-        public ProjectTypeEnum ProjectType { get; set; }
+        public int ProjectType { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
 
-        public DateTime? EndDate { get; set; }
+        [Required]
+        public DateTime EndDate { get; set; }
 
         [Required]
         public Guid ProjectManager { get; set; }
@@ -30,12 +34,7 @@ namespace Out_of_Office.Models.DB_Models
         public string? Comment { get; set; }
 
         [Required]
-        [StringLength(10)]
-        public string Status { get; set; } = "Active"; // Default value is "Active"
-
-        // Navigation properties
-
-        [ForeignKey("ProjectManager")]
-        public EmployeeModel ProjectManagerObject { get; set; }
+        [ForeignKey("Status")]
+        public int Status { get; set; } 
     }
 }

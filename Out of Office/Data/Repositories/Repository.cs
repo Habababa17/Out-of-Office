@@ -62,5 +62,6 @@ namespace Out_of_Office.Data.Repositories
         {
             return await _dbContext.Set<T>().ToListAsync();
         }
+
     }
 }

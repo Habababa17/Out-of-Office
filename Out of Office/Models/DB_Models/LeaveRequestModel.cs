@@ -14,15 +14,12 @@ namespace Out_of_Office.Models.DB_Models
     {
         public Guid ID { get; set; }
         public Guid Employee { get; set; }
-
         [ForeignKey("AbsenceReason")]
-        public AbsenceReasonEnum AbsenceReason { get; set; }
+        public int AbsenceReason { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string? Comment { get; set; }
-        public string Status { get; set; }
-
-        // Navigation properties
-        public EmployeeModel EmployeeObject { get; set; }
+        [ForeignKey("Status")]
+        public int Status { get; set; }
     }
 }
